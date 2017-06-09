@@ -51,7 +51,7 @@ class KAZControllerScene: SKScene {
         shootJoystick.setInnerControl(withImageName: ImageFilename.innerControl, alpha: 0.5,
                                       nodeName: KAZNodeName.shootJoystick)
         shootJoystick.movePoints = 8;
-        shootJoystick.position = CGPoint(x: frame.width - 150, y: frame.height - 180)
+        shootJoystick.position = CGPoint(x: frame.width - 150, y: 180)
         shootJoystick.defaultAngle = 90 // Default angle to report straight up for firing towards top
         addChild(shootJoystick)
     }
