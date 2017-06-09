@@ -48,10 +48,9 @@ class KAZViewController: UIViewController {
             scene = KAZDynamicControllerScene(size: skView.bounds.size)
         } else {
             // TODO: present fixed controller scene
-            scene = KAZDynamicControllerScene(size: skView.bounds.size)
+            scene = KAZFixedControllerScene(size: skView.bounds.size)
         }
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
     }
-    
 }
