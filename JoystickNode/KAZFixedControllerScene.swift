@@ -1,14 +1,21 @@
 //
-//  KAZDynamicControllerScene.swift
+//  KAZFixedControllerScene.swift
 //  JoystickNode
 //
-//  Created by Carlos Villanueva Ousset on 6/7/17.
+//  Created by Carlos Villanueva Ousset on 6/8/17.
 //  Copyright © 2017 Villou. All rights reserved.
 //
 
 import SpriteKit
 
-class KAZDynamicControllerScene: SKScene {
+class KAZFixedControllerScene: SKScene {
+    
+    private struct NodeName {
+        static let moveJoystick = "MoveJoystick"
+        static let shootJoystick = "ShootJoystick"
+        static let spaceship = "spaceship"
+        static let bullet = "bullet"
+    }
     
     fileprivate var sprite: SKSpriteNode
     fileprivate var moveJoystick: KAZJoystickNode
@@ -16,7 +23,7 @@ class KAZDynamicControllerScene: SKScene {
     fileprivate var lastUpdate: TimeInterval = 0
     
     override init(size: CGSize) {
-        sprite = SKSpriteNode(imageNamed: "Spaceship")
+        sprite = SKSpriteNode(imageNamed: NodeName.spaceship)
         moveJoystick = KAZJoystickNode()
         shootJoystick = KAZJoystickNode()
         
@@ -29,70 +36,36 @@ class KAZDynamicControllerScene: SKScene {
         addChild(sprite)
         
         moveJoystick.setOuterControl(withImageName: "outer", alpha: 0.25)
-        moveJoystick.setInnerControl(withImageName: "inner", alpha: 0.5)
+        moveJoystick.setInnerControl(withImageName: "inner", alpha: 0.5,
+                                     nodeName: NodeName.moveJoystick)
         moveJoystick.movePoints = 8
+        moveJoystick.autoShowHide = false
+        moveJoystick.position = CGPoint(x: 150, y: 180)
         addChild(moveJoystick)
         
         shootJoystick.setOuterControl(withImageName: "outer", alpha: 0.25)
-        shootJoystick.setInnerControl(withImageName: "inner", alpha: 0.5)
+        shootJoystick.setInnerControl(withImageName: "inner", alpha: 0.5,
+                                      nodeName: NodeName.shootJoystick)
+        shootJoystick.autoShowHide = false
+        shootJoystick.position = CGPoint(x: frame.width - 150, y: frame.height - 180)
         shootJoystick.defaultAngle = 90 // Default angle to report straight up for firing towards top
         addChild(shootJoystick)
-        
-        createMoveHelper()
-        createShootHelper()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func createShootHelper() {
-        let shape = SKShapeNode()
-        let path = CGMutablePath()
-        path.addRect(CGRect(x: size.width/2, y: 0, width: size.width/2, height: size.height))
-        shape.path = path
-        shape.fillColor = UIColor.green
-        shape.strokeColor = UIColor.white
-        shape.position = CGPoint.zero
-        shape.alpha = 0.25
-        addChild(shape)
-
-        let helper = SKLabelNode(fontNamed: "Courier")
-        helper.fontColor = UIColor.white
-        helper.fontSize = 14
-        helper.text = "Tap here to show fire joystick"
-        helper.position = CGPoint(x: size.width/2 + size.width/4, y: shape.frame.midY)
-        addChild(helper)
-    }
-    
-    fileprivate func createMoveHelper() {
-        let shape = SKShapeNode()
-        let path = CGMutablePath()
-        path.addRect(CGRect(x: 0, y: 0, width: size.width/2, height: size.height))
-        shape.path = path
-        shape.fillColor = UIColor.green
-        shape.strokeColor = UIColor.white
-        shape.position = CGPoint.zero
-        shape.alpha = 0.25
-        addChild(shape)
-        
-        let helper = SKLabelNode(fontNamed: "Courier")
-        helper.fontColor = UIColor.white
-        helper.fontSize = 14
-        helper.text = "Tap here to show move joystick"
-        helper.position = CGPoint(x: size.width/2/2, y: shape.frame.midY)
-        addChild(helper)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
             
-            // If the user touches the left side of the screen, use the move joystick
-            if location.x < size.width/2 {
+            let touchedNodes = nodes(at: location)
+            
+            if let _ = (touchedNodes.filter { $0.name == NodeName.moveJoystick }).first {
                 moveJoystick.startControl(fromTouch: touch, location: location)
-            } else {
-                shootJoystick.startControl(fromTouch: touch, location: location)
+            } else if let _ = (touchedNodes.filter { $0.name == NodeName.shootJoystick }).first {
+                moveJoystick.startControl(fromTouch: touch, location: location)
             }
         }
     }
@@ -100,6 +73,7 @@ class KAZDynamicControllerScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
+            
             if touch == moveJoystick.startTouch {
                 moveJoystick.moveControl(toTouch: touch, location: location)
             } else if touch == shootJoystick.startTouch {
@@ -107,7 +81,7 @@ class KAZDynamicControllerScene: SKScene {
             }
         }
     }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if touch == moveJoystick.startTouch {
@@ -117,7 +91,7 @@ class KAZDynamicControllerScene: SKScene {
             }
         }
     }
-    
+
     fileprivate func destinationPoint(forAngle angle: CGFloat) -> CGPoint {
         let angleInRadians = angle * CGFloat.pi / 180.0
         // For an easy calculation
@@ -163,7 +137,7 @@ class KAZDynamicControllerScene: SKScene {
     fileprivate func shootBullet() {
         guard let angle = shootJoystick.angle else { return }
         
-        let bullet = SKSpriteNode(imageNamed: "bullet")
+        let bullet = SKSpriteNode(imageNamed: NodeName.bullet)
         bullet.position = sprite.position
         addChild(bullet)
         
@@ -176,20 +150,6 @@ class KAZDynamicControllerScene: SKScene {
         bullet.run(SKAction.sequence([moveAction, removeAction]))
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

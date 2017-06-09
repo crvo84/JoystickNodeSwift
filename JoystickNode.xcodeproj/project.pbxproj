@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7382E2A71EE90E9A00488184 /* KAZDynamicControllerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7382E2A61EE90E9A00488184 /* KAZDynamicControllerScene.swift */; };
 		7382E2A91EE91AC800488184 /* KAZViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7382E2A81EE91AC800488184 /* KAZViewController.swift */; };
+		7382E2AB1EEA1FEA00488184 /* KAZFixedControllerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7382E2AA1EEA1FEA00488184 /* KAZFixedControllerScene.swift */; };
 		7C7C46FD1EE90A2E001EEA38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C46FC1EE90A2E001EEA38 /* AppDelegate.swift */; };
 		7C7C47021EE90A2E001EEA38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C7C47001EE90A2E001EEA38 /* Main.storyboard */; };
 		7C7C47041EE90A2E001EEA38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C7C47031EE90A2E001EEA38 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		7382E2A61EE90E9A00488184 /* KAZDynamicControllerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KAZDynamicControllerScene.swift; sourceTree = "<group>"; };
 		7382E2A81EE91AC800488184 /* KAZViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KAZViewController.swift; sourceTree = "<group>"; };
+		7382E2AA1EEA1FEA00488184 /* KAZFixedControllerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KAZFixedControllerScene.swift; sourceTree = "<group>"; };
 		7C7C46F91EE90A2E001EEA38 /* JoystickNode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JoystickNode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7C46FC1EE90A2E001EEA38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C7C47011EE90A2E001EEA38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				7C7C470F1EE90B1A001EEA38 /* KAZJoystickNode.swift */,
 				7382E2A81EE91AC800488184 /* KAZViewController.swift */,
 				7382E2A61EE90E9A00488184 /* KAZDynamicControllerScene.swift */,
+				7382E2AA1EEA1FEA00488184 /* KAZFixedControllerScene.swift */,
 				7C7C47031EE90A2E001EEA38 /* Assets.xcassets */,
 				7C7C470E1EE90A3D001EEA38 /* Supporting Files */,
 			);
@@ -153,6 +156,7 @@
 			files = (
 				7C7C47101EE90B1A001EEA38 /* KAZJoystickNode.swift in Sources */,
 				7C7C46FD1EE90A2E001EEA38 /* AppDelegate.swift in Sources */,
+				7382E2AB1EEA1FEA00488184 /* KAZFixedControllerScene.swift in Sources */,
 				7382E2A71EE90E9A00488184 /* KAZDynamicControllerScene.swift in Sources */,
 				7382E2A91EE91AC800488184 /* KAZViewController.swift in Sources */,
 			);
